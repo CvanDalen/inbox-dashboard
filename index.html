@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="300">
+<title>Inbox Dashboard — Capestone &amp; Comgate</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: #f0f2f5; color: #1a1a1a; min-height: 100vh; padding: 32px 24px; }
+  .page-header { max-width: 1280px; margin: 0 auto 24px; display: flex; justify-content: space-between; align-items: center; }
+  .page-title { font-size: 20px; font-weight: 700; }
+  .page-subtitle { font-size: 13px; color: #666; margin-top: 2px; }
+  .refreshed { font-size: 12px; color: #999; text-align: right; }
+  .refreshed strong { color: #555; }
+  .grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .card { background: #fff; border-radius: 14px; padding: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .inbox-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .icon-capestone { background: #dbeafe; }
+  .icon-comgate { background: #dcfce7; }
+  .icon-priority { background: #fce7f3; }
+  .inbox-name { font-weight: 700; font-size: 15px; }
+  .inbox-email { font-size: 12px; color: #888; }
+  .counters { display: flex; gap: 10px; margin-bottom: 10px; }
+  .counters-age { display: flex; gap: 10px; margin-bottom: 20px; }
+  .counter { flex: 1; background: #f8f9fa; border-radius: 10px; padding: 12px; text-align: center; border: 1px solid #eee; }
+  .counter-sm { flex: 1; background: #f8f9fa; border-radius: 8px; padding: 8px 6px; text-align: center; border: 1px solid #eee; }
+  .counter-num { font-size: 30px; font-weight: 800; line-height: 1; margin-bottom: 3px; }
+  .counter-num-sm { font-size: 20px; font-weight: 800; line-height: 1; margin-bottom: 2px; }
+  .counter-label { font-size: 11px; color: #888; }
+  .counter-label-sm { font-size: 10px; color: #aaa; }
+  .num-total { color: #3b82f6; }
+  .num-unread { color: #f97316; }
+  .num-1d { color: #f59e0b; }
+  .num-2d { color: #ef4444; }
+  .num-5d { color: #991b1b; }
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #aaa; margin-bottom: 10px; }
+  .mail-list { display: flex; flex-direction: column; gap: 7px; }
+  .mail-item { background: #fafafa; border-radius: 9px; padding: 10px 12px; border: 1px solid #ececec; }
+  .mail-row1 { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 3px; }
+  .mail-subject { font-size: 13px; font-weight: 600; line-height: 1.3; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mail-age { font-size: 11px; font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 2px 8px; border-radius: 99px; }
+  .age-urgent { background: #fee2e2; color: #dc2626; }
+  .age-warn { background: #fef3c7; color: #d97706; }
+  .age-ok { background: #dcfce7; color: #16a34a; }
+  .mail-sender { font-size: 11px; color: #999; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .footer { max-width: 1280px; margin: 20px auto 0; font-size: 11px; color: #bbb; text-align: center; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div>
+    <div class="page-title">Inbox Dashboard</div>
+    <div class="page-subtitle">support@capestone.com &amp; support@comgate.io &amp; priority@capestone.com</div>
+  </div>
+  <div class="refreshed">Laatst ververst:<br><strong id="ts"></strong></div>
+</div>
+<div class="grid">
+
+  <div class="card">
+    <div class="card-header">
+      <div class="inbox-icon icon-capestone">📥</div>
+      <div><div class="inbox-name">Capestone Support</div><div class="inbox-email">support@capestone.com</div></div>
+    </div>
+    <div class="counters">
+      <div class="counter"><div class="counter-num num-total">20</div><div class="counter-label">Totaal in inbox</div></div>
+      <div class="counter"><div class="counter-num num-unread">9</div><div class="counter-label">Ongelezen</div></div>
+    </div>
+    <div class="counters-age">
+      <div class="counter-sm"><div class="counter-num-sm num-1d">8</div><div class="counter-label-sm">&gt; 1 dag</div></div>
+      <div class="counter-sm"><div class="counter-num-sm num-2d">8</div><div class="counter-label-sm">&gt; 2 dagen</div></div>
+      <div class="counter-sm"><div class="counter-num-sm num-5d">3</div><div class="counter-label-sm">&gt; 5 dagen</div></div>
+    </div>
+    <div class="section-title">5 Langst openstaand</div>
+    <div class="mail-list">
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">Re: caller id issues ruggear rg880</div><div class="mail-age age-urgent">21d</div></div>
+        <div class="mail-sender">victor.li@ruggear.com</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">RE: Poort 502</div><div class="mail-age age-urgent">13d</div></div>
+        <div class="mail-sender">peter.silverans@sparki.be</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">FW: Verloop credits</div><div class="mail-age age-urgent">7d</div></div>
+        <div class="mail-sender">orders@capestone.com</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">Re: Battery replacement IS931.1</div><div class="mail-age age-warn">3d</div></div>
+        <div class="mail-sender">support@isafe-mobile.com</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">Re: Usb c cover broken</div><div class="mail-age age-warn">3d</div></div>
+        <div class="mail-sender">support@isafe-mobile.com</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="inbox-icon icon-comgate">📥</div>
+      <div><div class="inbox-name">Comgate Support</div><div class="inbox-email">support@comgate.io</div></div>
+    </div>
+    <div class="counters">
+      <div class="counter"><div class="counter-num num-total">15</div><div class="counter-label">Totaal in inbox</div></div>
+      <div class="counter"><div class="counter-num num-unread">9</div><div class="counter-label">Ongelezen</div></div>
+    </div>
+    <div class="counters-age">
+      <div class="counter-sm"><div class="counter-num-sm num-1d">1</div><div class="counter-label-sm">&gt; 1 dag</div></div>
+      <div class="counter-sm"><div class="counter-num-sm num-2d">1</div><div class="counter-label-sm">&gt; 2 dagen</div></div>
+      <div class="counter-sm"><div class="counter-num-sm num-5d">0</div><div class="counter-label-sm">&gt; 5 dagen</div></div>
+    </div>
+    <div class="section-title">5 Langst openstaand</div>
+    <div class="mail-list">
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">No Vodafone network service when roaming NL</div><div class="mail-age age-warn">2d</div></div>
+        <div class="mail-sender">service.iot@telefonica.com</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">Changing bundle from 1GB 1 year to 500MB 5 years</div><div class="mail-age age-ok">0d</div></div>
+        <div class="mail-sender">jrsalvador@davantel.com</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">No Vodafone network roaming NL // T-00212878</div><div class="mail-age age-ok">0d</div></div>
+        <div class="mail-sender">service.iot@telefonica.com</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">Re: Openstaande posten Veiligplus</div><div class="mail-age age-ok">0d</div></div>
+        <div class="mail-sender">rene@veiligplus.nl</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">8931085625097832653</div><div class="mail-age age-ok">0d</div></div>
+        <div class="mail-sender">info@horse-watch.nl</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="inbox-icon icon-priority">🔔</div>
+      <div><div class="inbox-name">Capestone Priority</div><div class="inbox-email">priority@capestone.com</div></div>
+    </div>
+    <div class="counters">
+      <div class="counter"><div class="counter-num num-total">79</div><div class="counter-label">Totaal in inbox</div></div>
+      <div class="counter"><div class="counter-num num-unread">6</div><div class="counter-label">Ongelezen</div></div>
+    </div>
+    <div class="counters-age">
+      <div class="counter-sm"><div class="counter-num-sm num-1d">5</div><div class="counter-label-sm">&gt; 1 dag</div></div>
+      <div class="counter-sm"><div class="counter-num-sm num-2d">2</div><div class="counter-label-sm">&gt; 2 dagen</div></div>
+      <div class="counter-sm"><div class="counter-num-sm num-5d">0</div><div class="counter-label-sm">&gt; 5 dagen</div></div>
+    </div>
+    <div class="section-title">5 Langst openstaand</div>
+    <div class="mail-list">
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">RE: aanmaken VPN hub</div><div class="mail-age age-warn">3d</div></div>
+        <div class="mail-sender">peter.silverans@sparki.be</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">RE: aanmaken VPN hub</div><div class="mail-age age-warn">2d</div></div>
+        <div class="mail-sender">peter.silverans@sparki.be</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">Router 6006865400 has gone offline</div><div class="mail-age age-ok">2d</div></div>
+        <div class="mail-sender">noreply@capestone.com</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">Router 6006865400 has gone offline</div><div class="mail-age age-ok">2d</div></div>
+        <div class="mail-sender">noreply@capestone.com</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-row1"><div class="mail-subject">Router 6006865400 has gone offline</div><div class="mail-age age-ok">1d</div></div>
+        <div class="mail-sender">noreply@capestone.com</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="footer">Automatisch ververst elk uur via Claude • pagina herlaadt zichzelf na 60 minuten</div>
+<script>
+  const d = new Date();
+  document.getElementById('ts').textContent = d.toLocaleString('nl-NL', {
+    day: 'numeric', month: 'long', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Amsterdam'
+  });
+
+  // Live reload: herlaad zodra server een nieuw bestand detecteert
+  const es = new EventSource('/events');
+  es.onmessage = e => { if (e.data === 'reload') location.reload(); };
+</script>
+</body>
+</html>
